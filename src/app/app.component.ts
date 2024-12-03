@@ -1,12 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';  
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterModule],  
+  template: `
+    <nav>
+      <a routerLink="/projects">Dashboard</a>
+    </nav>
+    <router-outlet></router-outlet> 
+  `,
+  styles: [`
+    nav {
+      background: #333;
+      padding: 10px;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  `]
 })
-export class AppComponent {
-  title = 'project-management-platform';
-}
+export class AppComponent {}
