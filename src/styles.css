@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+/* Reset di base per margini e padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3 {
+    font-family: 'Helvetica', sans-serif;
+  }
+  
+  /* Design di base per l'intera applicazione */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  button {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Aggiungi un po' di margine e padding generali */
+  section {
+    padding: 20px;
+  }
+  
+  /* Style per il layout principale */
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  

@@ -8,51 +8,8 @@ import { Project } from '../project.model';  // Importa l'interfaccia
   selector: 'app-create-project',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  template: `
-    <h1>Create New Project</h1>
-    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="projectName">Project Name</label>
-        <input id="projectName" formControlName="name" />
-        <div *ngIf="projectForm.controls['name'].invalid && projectForm.controls['name'].touched">
-          <small class="error">Project Name is required</small>
-        </div>
-      </div>
-
-      <div>
-        <label for="description">Project Description</label>
-        <textarea id="description" formControlName="description"></textarea>
-      </div>
-
-      <button type="submit" [disabled]="projectForm.invalid">Create Project</button>
-    </form>
-  `,
-  styles: [`
-    .error {
-      color: red;
-      font-size: 0.8rem;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      max-width: 400px;
-      margin: 20px auto;
-    }
-    div {
-      margin-bottom: 10px;
-    }
-    button {
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:disabled {
-      background-color: #ddd;
-    }
-  `]
+  styleUrls: ['./create-project.component.css'] ,
+  templateUrl: './create-project.component.html'
 })
 export class CreateProjectComponent {
   projectForm: FormGroup;

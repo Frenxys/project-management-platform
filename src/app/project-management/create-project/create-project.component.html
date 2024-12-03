@@ -1,1 +1,17 @@
-<p>create-project works!</p>
+<h1>Create New Project</h1>
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="projectName">Project Name</label>
+        <input id="projectName" formControlName="name" />
+        <div *ngIf="projectForm.controls['name'].invalid && projectForm.controls['name'].touched">
+          <small class="error">Project Name is required</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="description">Project Description</label>
+        <textarea id="description" formControlName="description"></textarea>
+      </div>
+
+      <button type="submit" [disabled]="projectForm.invalid">Create Project</button>
+    </form>
