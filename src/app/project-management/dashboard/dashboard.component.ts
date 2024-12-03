@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { Project } from '../project.model';  // Importa l'interfaccia
 
 @Component({
   selector: 'app-dashboard',
@@ -14,12 +16,12 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     button {
-      margin: 10px 0;
+      margin: 10px;
       padding: 10px;
       background-color: #007bff;
-      color: #fff;
+      color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
     }
     ul {
@@ -36,10 +38,20 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class DashboardComponent {
-  projects = [{ name: 'Project Alpha' }, { name: 'Project Beta' }];
+  projects: Project[] = [];  // Tipo dichiarato come Project[]
+
+  constructor(private router: Router) {
+    this.loadProjects();
+  }
 
   createProject() {
-    const newProject = `Project ${String.fromCharCode(65 + this.projects.length)}`;
-    this.projects.push({ name: newProject });
+    this.router.navigate(['/create-project']);
+  }
+
+  loadProjects() {
+    const storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+      this.projects = JSON.parse(storedProjects);  // TypeScript ora sa che è un array di Project
+    }
   }
 }
