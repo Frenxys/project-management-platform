@@ -15,11 +15,22 @@ export class CreateProjectComponent {
   projectForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router) {
-    this.projectForm = this.fb.group({
-      name: ['', Validators.required],
-      description: [''],
-    });
+    const projectToEdit = localStorage.getItem('projectToEdit');
+    if (projectToEdit) {
+      const project: Project = JSON.parse(projectToEdit);
+      this.projectForm = this.fb.group({
+        name: [project.name, Validators.required],
+        description: [project.description],
+      });
+      localStorage.removeItem('projectToEdit'); // Rimuovi dopo aver precompilato
+    } else {
+      this.projectForm = this.fb.group({
+        name: ['', Validators.required],
+        description: [''],
+      });
+    }
   }
+  
 
   onSubmit() {
     if (this.projectForm.valid) {

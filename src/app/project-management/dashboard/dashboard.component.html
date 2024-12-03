@@ -1,5 +1,18 @@
-<h1>Project Management Dashboard</h1>
-    <button (click)="createProject()">Create New Project</button>
+<div class="dashboard-container">
+  <h1>Progetti</h1>
+  <button (click)="createProject()">+ Crea Nuovo Progetto</button>
+  <div *ngIf="projects.length > 0; else noProjects">
     <ul>
-      <li *ngFor="let project of projects">{{ project.name }}</li>
+      <li *ngFor="let project of projects; let i = index">
+        <h2>{{ project.name }}</h2>
+        <p>{{ project.description }}</p>
+        <button (click)="deleteProject(i)">Elimina</button>
+        <!-- Per la modifica -->
+        <button (click)="editProject(i)">Modifica</button>
+      </li>
     </ul>
+  </div>
+  <ng-template #noProjects>
+    <p>Nessun progetto disponibile. Creane uno nuovo!</p>
+  </ng-template>
+</div>
