@@ -67,19 +67,21 @@ export class CreateProjectComponent {
   onSubmit() {
     if (this.projectForm.valid) {
       const newProject: Project = this.projectForm.value;  // Specifica il tipo Project
-      
-      // Carica i progetti esistenti da localStorage
-      const storedProjects = localStorage.getItem('projects');
-      const projects: Project[] = storedProjects ? JSON.parse(storedProjects) : [];
 
-      // Aggiungi il nuovo progetto all'elenco
-      projects.push(newProject);
+      // Verifica se siamo nel browser prima di accedere a localStorage
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const storedProjects = localStorage.getItem('projects');
+        const projects: Project[] = storedProjects ? JSON.parse(storedProjects) : [];
 
-      // Memorizza l'elenco di progetti aggiornato nel localStorage
-      localStorage.setItem('projects', JSON.stringify(projects));
+        // Aggiungi il nuovo progetto all'elenco
+        projects.push(newProject);
 
-      // Redirect alla dashboard
-      this.router.navigate(['/projects']);
+        // Memorizza l'elenco di progetti aggiornato nel localStorage
+        localStorage.setItem('projects', JSON.stringify(projects));
+
+        // Redirect alla dashboard
+        this.router.navigate(['/projects']);
+      }
     }
   }
 }

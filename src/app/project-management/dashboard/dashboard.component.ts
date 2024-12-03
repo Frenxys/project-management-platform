@@ -38,7 +38,7 @@ import { Project } from '../project.model';  // Importa l'interfaccia
   `]
 })
 export class DashboardComponent {
-  projects: Project[] = [];  // Tipo dichiarato come Project[]
+  projects: Project[] = [];
 
   constructor(private router: Router) {
     this.loadProjects();
@@ -49,9 +49,11 @@ export class DashboardComponent {
   }
 
   loadProjects() {
-    const storedProjects = localStorage.getItem('projects');
-    if (storedProjects) {
-      this.projects = JSON.parse(storedProjects);  // TypeScript ora sa che è un array di Project
+    if (typeof window !== 'undefined' && window.localStorage) {  // Verifica se siamo nel browser
+      const storedProjects = localStorage.getItem('projects');
+      if (storedProjects) {
+        this.projects = JSON.parse(storedProjects);  // Carica i progetti salvati
+      }
     }
   }
 }
