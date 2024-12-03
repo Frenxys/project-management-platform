@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Project } from '../project.model';  // Importa l'interfaccia
+import { Project } from '../project.model'; // Importa l'interfaccia
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './dashboard.component.html',  // Assicurati che il file HTML sia correttamente linkato
+  templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
-  
 })
 export class DashboardComponent {
   projects: Project[] = [];
+  editIndex: number | null = null; // Indice del progetto attualmente in modifica
 
   constructor(private router: Router) {
     this.loadProjects();
@@ -23,30 +23,36 @@ export class DashboardComponent {
   }
 
   loadProjects() {
-    if (typeof window !== 'undefined' && window.localStorage) {  // Verifica se siamo nel browser
+    if (typeof window !== 'undefined' && window.localStorage) {
       const storedProjects = localStorage.getItem('projects');
       if (storedProjects) {
-        this.projects = JSON.parse(storedProjects);  // Carica i progetti salvati
+        this.projects = JSON.parse(storedProjects);
       }
     }
   }
+
   deleteProject(index: number) {
+    this.projects.splice(index, 1);
+    this.updateLocalStorage();
+  }
+
+  enableEdit(index: number) {
+    this.editIndex = index;
+  }
+
+  saveEdit() {
+    this.updateLocalStorage();
+    this.editIndex = null; // Esci dalla modalità modifica
+  }
+
+  cancelEdit() {
+    this.loadProjects(); // Ricarica i progetti per annullare le modifiche non salvate
+    this.editIndex = null;
+  }
+
+  updateLocalStorage() {
     if (typeof window !== 'undefined' && window.localStorage) {
-      // Rimuovi il progetto dall'array
-      this.projects.splice(index, 1);
-      // Aggiorna il localStorage
       localStorage.setItem('projects', JSON.stringify(this.projects));
     }
   }
-  
-  editProject(index: number) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const projectToEdit = this.projects[index];
-      // Memorizza il progetto da modificare in localStorage (o usa un servizio di stato globale)
-      localStorage.setItem('projectToEdit', JSON.stringify(projectToEdit));
-      // Naviga al modulo di creazione con il progetto precompilato
-      this.router.navigate(['/create-project']);
-    }
-  }
-  
 }

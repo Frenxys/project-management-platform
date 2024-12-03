@@ -4,11 +4,19 @@
   <div *ngIf="projects.length > 0; else noProjects">
     <ul>
       <li *ngFor="let project of projects; let i = index">
-        <h2>{{ project.name }}</h2>
-        <p>{{ project.description }}</p>
-        <button (click)="deleteProject(i)">Elimina</button>
-        <!-- Per la modifica -->
-        <button (click)="editProject(i)">Modifica</button>
+        <!-- Modalità visualizzazione -->
+        <div *ngIf="editIndex !== i">
+          <h2>{{ project.name }}</h2>
+          <p>{{ project.description }}</p>
+          <button (click)="deleteProject(i)">Elimina</button>
+          <button (click)="enableEdit(i)">Modifica</button>
+        </div>
+        <!-- Modalità modifica -->
+        <div *ngIf="editIndex === i">
+          <input [(ngModel)]="projects[i].name" placeholder="Nuovo nome del progetto" />
+          <button (click)="saveEdit()">Salva</button>
+          <button (click)="cancelEdit()">Annulla</button>
+        </div>
       </li>
     </ul>
   </div>
